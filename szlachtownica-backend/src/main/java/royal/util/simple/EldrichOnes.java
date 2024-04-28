@@ -16,10 +16,13 @@ public class EldrichOnes {
 		int minimalAge;
 	        int diversity;
 		int maxAgeDifference;
+		Person person1;
+		Person person2;
 		if (family.raceObj == Racist.human) {
 		    minimalAge = 20;
 		    diversity = 20;
 		    maxAgeDifference = 8;
+		    person1 = callPerson(rand.nextBoolean(), family.raceObj, 20, 20, 8);
 		} else if (family.raceObj == Racist.elf) {
                     minimalAge = 40;
 		    diversity = 400;
@@ -47,7 +50,6 @@ public class EldrichOnes {
 		}
 		int ageDifference = rand.nextInt(maxAgeDifference);
 		int born = family.creationDate - (minimalAge + rand.nextInt(diversity));
-		boolean sex = rand.nextBoolean();
 		Person person1 = Personist.getPerson(sex, family.raceObj, sex ? born - ageDifference : born);
 		Person person2 = Personist.getPerson(!sex, family.raceObj, sex ? born : born - ageDifference);
 		
