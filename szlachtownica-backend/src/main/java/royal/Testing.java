@@ -3,6 +3,10 @@ package royal;
 import royal.model.Family;
 import royal.model.Person;
 import royal.model.Race;
+import royal.util.Familiar;
+import royal.util.simple.Timer;
+
+import java.util.Calendar;
 
 public class Testing {
 	
@@ -10,6 +14,15 @@ public class Testing {
 	static double motherinbreeding = 0.6476600832429119;
 
 	public static void main(String[] args) {
+
+		Calendar first = Timer.getDate(1457);
+		Calendar second = Timer.getDate(1452);
+		long years = first.get(Calendar.YEAR) - second.get(Calendar.YEAR);
+		long days = first.get(Calendar.DAY_OF_YEAR) - second.get(Calendar.DAY_OF_YEAR);
+		System.out.println(first.getTime() + " - " + second.getTime());
+		System.out.println(years + " - " + days);
+
+/*
 		Race race = new Race(0, 0, 0, 0, fatherinbreeding, fatherinbreeding, fatherinbreeding, fatherinbreeding, fatherinbreeding, args, args, args, fatherinbreeding, fatherinbreeding, fatherinbreeding, fatherinbreeding, motherinbreeding, fatherinbreeding);
 		Family family = new Family(null, 0, race , 0);
 		Person p = new Person(null, family , null, null, null, null, false, fatherinbreeding, fatherinbreeding, fatherinbreeding, fatherinbreeding, fatherinbreeding, fatherinbreeding, fatherinbreeding, 0, 0, 0, fatherinbreeding, fatherinbreeding, fatherinbreeding, fatherinbreeding, motherinbreeding, fatherinbreeding);
@@ -30,6 +43,7 @@ public class Testing {
 		double fourth = 1 - (double) ancestors / 62.0;
 		double inheritedFactor = (0.2 + Math.sqrt(fatherinbreeding) + Math.sqrt(motherinbreeding));
 		System.out.println(inheritedFactor * (first / 1.5 + second / 2.5 + third / 4.5 + fourth / 8.5));
+ */
 	}
 
 }

@@ -19,7 +19,9 @@ public class Ares {
 		for (War war : wars) {
 			if (war.start.before(Timer.currentCalendar) && war.end.after(Timer.currentCalendar)) {
 				if (rand.nextDouble() < 0.00005 && person.family.aliveMembers.size() > 20) {
-					Killer.kill(person, Timer.currentCalendar);
+					if (person.isAdult()) {
+						Killer.kill(person, Timer.currentCalendar);
+					}
 				}
 			}
 		}
@@ -50,11 +52,11 @@ public class Ares {
 		return date;
 	}
 
-	public static void handlePrinceChange(Family family, Calendar currentCalendar2) {
+	public static void handlePrinceChange(Family family) {
 		Calendar toDelete = null;
 		for (Calendar change : princeChanges) {
-			if (change.before(currentCalendar2) && family.raceObj == Racist.human && family != Familiar.tagar) {
-				Killer.kill(family.getHead(), currentCalendar2);
+			if (change.before(Timer.currentCalendar) && family.raceObj == Racist.human && family != Familiar.tagar) {
+				Killer.kill(family.getHead(), Timer.currentCalendar);
 				toDelete = change;
 			}
 		}

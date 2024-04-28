@@ -17,6 +17,7 @@ public class Family {
 	public List<Person> aliveMembers = new ArrayList<>();
 	@JsonSerialize
 	public List<Person> deadMembers = new ArrayList<>();
+	private List<Person> membersToRemove = new ArrayList<>();
 
 	@JsonGetter("nestor")
 	public long getNestor() {
@@ -66,24 +67,6 @@ public class Family {
 		this.plebs = plebs;
 		this.needChildren = !plebs;
 	}
-
-//	@JsonGetter("alive")
-//	public List<Long> getAlive() {
-//		List<Long> list = new ArrayList<>();
-//		for (Person p : aliveMembers) {
-//			list.add(p.id);
-//		}
-//		return list;
-//	}
-
-//	@JsonGetter("dead")
-//	public List<Long> getDead() {
-//		List<Long> list = new ArrayList<>();
-//		for (Person p : deadMembers) {
-//			list.add(p.id);
-//		}
-//		return list;
-//	}
 
 	@JsonIgnore
 	public Person getHead() {
@@ -203,6 +186,16 @@ public class Family {
 			}
 		}
 		return branches;
+	}
+
+	public void markMemberForRemoval(Person member) {
+		membersToRemove.add(member);
+	}
+
+	public void removeMarkedMembers() {
+		membersToRemove.forEach(member -> {
+			aliveMembers.remove(member);
+		});
 	}
 
 }

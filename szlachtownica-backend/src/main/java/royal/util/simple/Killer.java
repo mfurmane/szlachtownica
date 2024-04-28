@@ -20,10 +20,10 @@ public class Killer {
 		makeDeath(person, date);
 	}
 
-	private static void makeDeath(Person person, Calendar currentCalendar) {
+	private static void makeDeath(Person person, Calendar date) {
 		if (person.isMarried()) {
 			Person partner = person.getMarriage().getPartner(person);
-			partner.mourningEnd = (Calendar) currentCalendar.clone();
+			partner.mourningEnd = (Calendar) date.clone();
 			partner.mourningEnd.add(Calendar.YEAR, partner.mourningTime);
 			if (partner.family != partner.parentsFamily && !partner.plebs && (rand.nextDouble() < 0.3 || (partner.family.strenght < partner.parentsFamily.strenght && rand.nextDouble() < 0.6))) {
 				Relater.backHome(partner, partner);
@@ -31,7 +31,7 @@ public class Killer {
 		}
 		for (Relationship rel : person.relationships) {
 			if (rel.isActive())
-				rel.end((Calendar) currentCalendar.clone());
+				rel.end((Calendar) date.clone());
 		}
 		if (person.family.aliveMembers.contains(person)) {
 			person.family.aliveMembers.remove(person);

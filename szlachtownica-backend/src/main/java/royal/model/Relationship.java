@@ -21,16 +21,18 @@ public class Relationship {
 		super();
 		this.type = type;
 		this.first = first;
-		this.second = second;
 		this.startDate = startDate;
 		left = first.id;
-		right = second.id;
+		if (second != null) {
+			this.second = second;
+			right = second.id;
+		}
 	}
 
 	@JsonIgnore
 	public String description() {
 		return type + "\t" + first.getName() + "\t" + (startDate != null ? startDate.get(Calendar.YEAR) : "")
-				+ "\t" + second.getName() + "\t" + (endDate != null ? endDate.get(Calendar.YEAR) : "");
+				+ "\t" + (second != null ? second.getName() : "random") + "\t" + (endDate != null ? endDate.get(Calendar.YEAR) : "");
 	}
 
 	@JsonIgnore

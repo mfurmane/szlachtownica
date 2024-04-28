@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import royal.util.simple.Namer;
+import royal.util.simple.Timer;
 
 import java.util.*;
 
@@ -160,22 +161,15 @@ public class Person {
 	@JsonIgnore
 	public List<Person> kids = new ArrayList<>();
 
-//	public float bestCandidate() {
-//		float a = 1;
-//		for (Person other : family.aliveMembers) {
-//			if (other.importance > importance && other.currentLegalPartner != null
-//					&& family.aliveMembers.contains(other.currentLegalPartner)
-//					&& other.currentLegalPartner.raceObj == other.raceObj
-//					&& other.sex != other.currentLegalPartner.sex) {
-//				a *= (0.5 * (10 - other.legalKid) / 10);
-//			}
-//			if (other.importance > importance && other.currentLegalPartner == null) {
-//				a *= (0.8);
-//			}
-//			a *= 0.98;
-//		}
-//		return a;
-//	}
+	public boolean isAdult() {
+		return getAge() >= stableAge;
+	}
+
+	private int getAge() {
+		int years = Timer.currentCalendar.get(Calendar.YEAR) - born.get(Calendar.YEAR);
+		long days = Timer.currentCalendar.get(Calendar.DAY_OF_YEAR) - born.get(Calendar.DAY_OF_YEAR);
+		return days >= 0 ? years : years - 1;
+	}
 
 	public Person(String name, Family family, Person father, Person mother, Calendar born, Status status, boolean sex,
 			double travelFactor, double hornyFactor, double loyalFactor, double homoFactor, double interracialFactor,
@@ -272,9 +266,6 @@ public class Person {
 	}
 
 	public double calculateDivorcable() {
-		// up - travelFactor, poliamoricFactor, jealousFactor, impulsiveFactor,
-		// proudFactor
-		// down - loyalFactor, attachmentFactor, importance
 		double tmpImportance = (family.strenght * lineImportance / 10);
 		double divor = (0.02 * (1.0 - travelFactor) + 0.1 * (1.0 - poliamoricFactor) + 0.38 * jealousFactor
 				+ 0.15 * impulsiveFactor + 0.35 * proudFactor)
@@ -296,65 +287,6 @@ public class Person {
 	public String alive() {
 		return died != null ? "+" : "";
 	}
-
-//	@JsonGetter("partner")
-//	public Long getPartner() {
-//		return currentLegalPartner != null ? currentLegalPartner.id : -1;
-//	}
-
-//	@JsonGetter("relationships")
-//	public List<String> getRelationships() {
-//		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-//		Map<Long, String> rels = new HashMap<>();
-//		for (Entry<Person, Calendar> p : ons.entrySet()) {
-//			long id2 = p.getKey().id;
-//			String string = format1.format(p.getValue());
-//			if (rels.containsKey(id2)) {
-//				rels.put(id2, rels.get(id2) + string);
-//			} else {
-//				rels.put(id2, string);
-//			}
-//		}
-//		for (Relationship p : relationships) {
-//			long id2 = p.getPartner(this).id;
-//			String string = "" + p.type.toString() + ":" + format1.format(p.startDate) + ":"
-//					+ format1.format(p.endDate);
-//			if (rels.containsKey(id2)) {
-//				rels.put(id2, rels.get(id2) + string);
-//			} else {
-//				rels.put(id2, string);
-//			}
-//		}
-//		List<String> partners = new ArrayList<>();
-//		for (Entry<Long, String> entry : rels.entrySet()) {
-//			partners.add(entry.getKey() + "#" + entry.getValue());
-//		}
-//		return partners;
-//	}
-
-//	@JsonIgnore
-//	public String getFullName() {
-//		if (!plebs) {
-//			if (parentsFamily.raceObj.surname) {
-//				return alive() + name + " " + (parentsFamily != family ? "(" + parentsFamily.surname + ") " : "")
-//						+ family.surname;
-//			}
-//			return alive() + name
-//					+ ((father != null || mother != null)
-//							? (" " + (father != null ? father.name : mother.name) + (sex ? "detter" : "son"))
-//							: "")
-//					+ " " + family.surname + (parentsFamily != family ? " (" + parentsFamily.surname + ")" : "");
-//		}
-//		if (parentsFamily.raceObj.surname) {
-//			return name + " " + (parentsFamily != family ? "(" + plebsSurname + ") " : "")
-//					+ (!family.plebs ? family.surname : plebsSurname);
-//		}
-//		return name
-//				+ ((father != null || mother != null) ? (" " + (Namer.dwarfFatherName()) + (sex ? "detter" : "son"))
-//						: "")
-//				+ " " + (!family.plebs ? family.surname : plebsSurname)
-//				+ (parentsFamily != family ? " (" + plebsSurname + ")" : "");
-//	}
 
 	@JsonIgnore
 	public int getLegalKidsCount() {

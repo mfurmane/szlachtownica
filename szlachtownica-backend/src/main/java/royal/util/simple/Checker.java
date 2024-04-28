@@ -47,4 +47,9 @@ public class Checker {
 		return rand.nextDouble() < first.amorousFactor;
 	}
 
+	public static boolean interracialMultiCheck(Person first) {
+		return Checker.interracialCheck(first) || Checker.interracialCheck(first)
+				|| Checker.interracialCheck(first) || Checker.interracialCheck(first)
+				|| Checker.interracialCheck(first);
+	}
 }
