@@ -21,25 +21,25 @@ public class EldrichOnes {
 		    diversity = 20;
 		    maxAgeDifference = 8;
 		} else if (family.raceObj == Racist.elf) {
-                    minimalAge = 20;
-		    diversity = 20;
-		    maxAgeDifference = 8;
+                    minimalAge = 40;
+		    diversity = 400;
+		    maxAgeDifference = 40;
 		} else if (family.raceObj == Racist.dwarf) {
-                    minimalAge = 20;
-		    diversity = 20;
-		    maxAgeDifference = 8;
+                    minimalAge = 30;
+		    diversity = 140;
+		    maxAgeDifference = 14;
 		} else if (family.raceObj == Racist.halfling) {
                     minimalAge = 20;
-		    diversity = 20;
-		    maxAgeDifference = 8;
+		    diversity = 65;
+		    maxAgeDifference = 10;
 		} else if (family.raceObj == Racist.gnome) {
-                    minimalAge = 20;
-		    diversity = 20;
-		    maxAgeDifference = 8;
+                    minimalAge = 30;
+		    diversity = 130;
+		    maxAgeDifference = 12;
 		} else if (family.raceObj == Racist.peura) {
-                    minimalAge = 20;
-		    diversity = 20;
-		    maxAgeDifference = 8;
+                    minimalAge = 40;
+		    diversity = 70;
+		    maxAgeDifference = 10;
 		} else {
                     minimalAge = 0;
 		    diversity = 0;
