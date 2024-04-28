@@ -13,15 +13,44 @@ public class EldrichOnes {
 	public static Random rand = new Random();
 
 	public static void createNestor(Family family) {
-		Person person1;
-		Person person2;
-		int minimalAge = 20;
-		int diversity = 20;
-		int ageDifference = rand.nextInt(8);
+		int minimalAge;
+	        int diversity;
+		int maxAgeDifference;
+		if (family.raceObj == Racist.human) {
+		    minimalAge = 20;
+		    diversity = 20;
+		    maxAgeDifference = 8;
+		} else if (family.raceObj == Racist.elf) {
+                    minimalAge = 20;
+		    diversity = 20;
+		    maxAgeDifference = 8;
+		} else if (family.raceObj == Racist.dwarf) {
+                    minimalAge = 20;
+		    diversity = 20;
+		    maxAgeDifference = 8;
+		} else if (family.raceObj == Racist.halfling) {
+                    minimalAge = 20;
+		    diversity = 20;
+		    maxAgeDifference = 8;
+		} else if (family.raceObj == Racist.gnome) {
+                    minimalAge = 20;
+		    diversity = 20;
+		    maxAgeDifference = 8;
+		} else if (family.raceObj == Racist.peura) {
+                    minimalAge = 20;
+		    diversity = 20;
+		    maxAgeDifference = 8;
+		} else {
+                    minimalAge = 0;
+		    diversity = 0;
+		    maxAgeDifference = 0;
+		}
+		int ageDifference = rand.nextInt(maxAgeDifference);
 		int born = family.creationDate - (minimalAge + rand.nextInt(diversity));
 		boolean sex = rand.nextBoolean();
-		person1 = Personist.getPerson(sex, family.raceObj, sex ? born - ageDifference : born);
-		person2 = Personist.getPerson(sex, family.raceObj, sex ? born : born - ageDifference);
+		Person person1 = Personist.getPerson(sex, family.raceObj, sex ? born - ageDifference : born);
+		Person person2 = Personist.getPerson(!sex, family.raceObj, sex ? born : born - ageDifference);
+		
 		if (family.raceObj == Racist.human) {
 			int born = family.creationDate - (20 + rand.nextInt(25));
 			if (rand.nextBoolean()) {
