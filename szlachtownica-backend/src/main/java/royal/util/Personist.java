@@ -41,8 +41,8 @@ public class Personist {
                 StateCreator.impulsive(race), StateCreator.proud(race), StateCreator.amorous(race));
     }
 
-    public static Person getPerson(boolean sex, Race race, int born) {
-        return new Person(Namer.getName(sex, race), plebsFamilyByRace(race), null,
+    public static Person getPerson(boolean sex, Race race, int born, Person father, Family family) {
+        return new Person(Namer.getName(sex, race), family, father,
                 null, Timer.currentCalendar, Person.Status.LEGAL_CHILD, sex, rand.nextDouble(),
                 StateCreator.horny(race), StateCreator.loyal(race), StateCreator.homo(race), StateCreator.interracial(race), 1,
                 1, StateCreator.childFrom(race), StateCreator.wantChild(race), EldrichOnes.mourningTime(),
@@ -50,6 +50,10 @@ public class Personist {
                 StateCreator.impulsive(race), StateCreator.proud(race), StateCreator.amorous(race));
     }
 
+    public static Person getPerson(boolean sex, Race race, int born, Family family) {
+        return getPerson(sex, race, born, null, family);
+    }
+    
     private static Family plebsFamilyByRace(Race race) {
         for (Family family : Familiar.plebs) {
             if (family.raceObj == race) {
