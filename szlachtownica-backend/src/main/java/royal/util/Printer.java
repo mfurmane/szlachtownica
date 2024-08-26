@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import royal.model.Family;
 import royal.model.Person;
 import royal.model.Relationship;
+import royal.util.simple.Debug;
 import royal.util.simple.Racist;
+import royal.util.simple.Timer;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -106,7 +108,7 @@ public class Printer {
                 e.printStackTrace(printWriter);
             }
             if (f.nestor != null) {
-//					System.out.println("KIDS "+f.nestor.getName() + " - " + f.nestor.kids.size());
+//					Debug.log("KIDS "+f.nestor.getName() + " - " + f.nestor.kids.size());
             }
             printWriter.close();
             fileWriter.close();
@@ -120,7 +122,7 @@ public class Printer {
         for (Family family : Familiar.families) {
 
             if (!family.plebs) {
-                System.out.println("\n" + family.surname.toUpperCase());
+                Debug.log("\n" + family.surname.toUpperCase());
                 family.nestor.printWithChildren("", new HashSet<>());
 
                 String shitpart = family.allMembers() < 5 ? "below5_" : "";
@@ -207,7 +209,7 @@ public class Printer {
                             blossoms.add(member);
                         }
                     }
-//				System.out.println("# " + (sum / family.allMembers()));
+//				Debug.log("# " + (sum / family.allMembers()));
                     printWriter2.println(
                             "Wszyscy: " + family.allMembers() + ", Ludzie: " + humansCount + ", Elfy: " + elvesCount
                                     + ", Krasnoludy: " + dwarfsCount + ", Niziołki: " + halfsCount + ", Gnomy: "
@@ -296,6 +298,19 @@ public class Printer {
                 printWriter.close();
                 printWriter2.close();
             }
+        }
+    }
+
+    public static void printFamilies() {
+        int year = Timer.currentCalendar.get(Calendar.YEAR);
+        if (year % 10 == 0) {
+            Debug.log("\n\nRok " + year);
+            Familiar.families.forEach(family -> {
+                if (!family.plebs) {
+                    Debug.log(family.surname + " - " + family.aliveMembers.size());
+                }
+            });
+            //System.exit(0);
         }
     }
 }

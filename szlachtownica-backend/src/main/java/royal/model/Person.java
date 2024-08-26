@@ -3,6 +3,7 @@ package royal.model;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import royal.util.simple.Debug;
 import royal.util.simple.Namer;
 import royal.util.simple.Timer;
 
@@ -393,7 +394,7 @@ public class Person {
 
 	@JsonIgnore
 	public void printWithChildren(String prefix, Set<Person> added) {
-		System.out.println(
+		Debug.log(
 				prefix + getName() + "\t" + aliveTime() + "\t[" + (father != null ? father.getName() : "") + ","
 						+ (mother != null ? mother.getName() : "") + "]\t"
 						+ (isMarried()
@@ -403,7 +404,7 @@ public class Person {
 		for (Person child : kids) {
 			if (child.family == family) {
 				if (added.contains(child)) {
-					System.out.println(prefix + "  ADDED BEFORE " + child.getName());
+					Debug.log(prefix + "  ADDED BEFORE " + child.getName());
 				} else {
 					added.add(child);
 					child.printWithChildren(prefix + "  ", added);

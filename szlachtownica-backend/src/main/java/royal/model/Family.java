@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import royal.util.simple.Timer;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @JsonRootName(value = "Family", namespace = "families")
@@ -198,4 +200,11 @@ public class Family {
 		});
 	}
 
+    public boolean isCreated() {
+		return !plebs && Timer.currentCalendar.get(Calendar.YEAR) >= creationDate;
+    }
+
+	public boolean shouldMarryPlebs() {
+		return isCreated() && plebsMarriageYearsCounter > 0;
+	}
 }

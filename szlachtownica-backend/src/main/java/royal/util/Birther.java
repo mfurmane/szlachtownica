@@ -34,7 +34,8 @@ public class Birther {
 
 	private static void childOut(Person person) {
 		Person child = createChild(person, person.childFather);
-
+		person.family.aliveMembers.add(child);
+		//Debug.log(child.family.surname + " - " + child.family.aliveMembers.contains(child));
 	}
 
 	private static Person createChild(Person person, Person partner) {

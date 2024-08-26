@@ -25,13 +25,19 @@ public class Main {
                 year = Timer.updateYear();
             }
             Familiar.families.forEach(family -> {
-                if (!family.plebs && Timer.currentCalendar.get(Calendar.YEAR) >= family.creationDate) {
+                if (family.isCreated()) {
                     handleFamilyForDay(family);
                 } else if (family.plebs) {
                     handlePlebs(family);
                 }
             });
-            Timer.currentCalendar.add(Calendar.WEEK_OF_YEAR, 1); // może tydzień
+            Timer.currentCalendar.add(Timer.timeSkip, 1); // może tydzień
+        }
+    }
+
+    private static void handlePlebs(Family family) {
+        for (Person aliveMember : family.aliveMembers) {
+            handleDeathPossibilities(aliveMember);
         }
     }
 
@@ -40,9 +46,9 @@ public class Main {
         if (Familiar.familyNeedChildren(family)) {
             Fucker.makeMeSomeBabies(family);
         }
-        family.aliveMembers.forEach(member -> {
-            handlePersonForDay(member, Familiar.familyAllowsHomo(family));
-        });
+        for (int i = 0; i < family.aliveMembers.size(); i++) {
+            handlePersonForDay(family.aliveMembers.get(i), Familiar.familyAllowsHomo(family));
+        }
         Personist.handleKnownMembers(family);
         Familiar.repairBloodlines(family);
     }
@@ -52,19 +58,15 @@ public class Main {
             Birther.handleBirth(person);
         else {
             handleDeathPossibilities(person);
-            Birther.handlePregnancy(person);
-            if (!Familiar.plebs.contains(person.parentsFamily)) {
-                Traveler.handleTravel(person);
-                Marriager.handleMissalliance(person);
-                Marriager.handleMarriage(person, familyAllowsHomo);
-                Birther.handleKnownKids(person);
+            if (person.family.aliveMembers.contains(person)) {
+                Birther.handlePregnancy(person);
+                if (!Familiar.plebs.contains(person.parentsFamily)) {
+                    Traveler.handleTravel(person);
+                    Marriager.handleMissalliance(person);
+                    Marriager.handleMarriage(person, familyAllowsHomo);
+                    Birther.handleKnownKids(person);
+                }
             }
-        }
-    }
-
-    private static void handlePlebs(Family family) {
-        for (Person aliveMember : family.aliveMembers) {
-            handleDeathPossibilities(aliveMember);
         }
     }
 

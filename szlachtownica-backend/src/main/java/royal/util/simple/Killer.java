@@ -12,8 +12,12 @@ public class Killer {
 	private static double chanceToDie = 0.008;
 
 	public static void kill(Person person, Calendar date) {
-		person.died = (Calendar) date.clone();
-		makeDeath(person, date);
+		if (person != null) {
+			person.died = (Calendar) date.clone();
+			makeDeath(person, date);
+		} else {
+			Debug.log(date.getTime().toString());
+		}
 	}
 
 	public static void killOnly(Person person, Calendar date) {

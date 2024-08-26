@@ -17,6 +17,7 @@ public class Fucker {
 	}
 
 	public static void makeChild(Person person, Person partner) {
+		//Debug.log("make child between " + person.getName() + " and " + partner.getName() + " - " + person.pregnantCounter + " - " + partner.pregnantCounter);
 		person.pregnantCounter = 40;
 		person.childFather = partner;
 	}

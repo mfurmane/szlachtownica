@@ -165,7 +165,7 @@ public class Familiar {
             }
             familiesList.add(family);
 //			for (Person person : family.aliveMembers) {
-            // System.out.println(person.getName());
+            // Debug.log(person.getName());
 //			}
         }
         for (Family family : families) {
@@ -189,7 +189,7 @@ public class Familiar {
         Collections.sort(familist, comparator);
         for (Family family : familist) {
             if (family.senior != null) {
-                System.out.println(family.senior.surname + "-" + family.surname + "-" + family.strenght + "-" + (family.vassals.size() > 0 ? 1 : 0));
+                Debug.log(family.senior.surname + "-" + family.surname + "-" + family.strenght + "-" + (family.vassals.size() > 0 ? 1 : 0));
             }
         }
 
@@ -209,14 +209,18 @@ public class Familiar {
         plebs.add(blossomPlebs);
 
 
-//		printFamilies();
+		printFamilies();
+//        System.exit(0);
     }
 
     private static void printFamilies() {
         for (Family f : families) {
+            Debug.log(f.surname + " - " + f.creationDate);
+        }
+        for (Family f : families) {
             for (Person p : f.aliveMembers) {
                 int age = f.creationDate - p.born.get(Calendar.YEAR);
-                System.out.println("### " + p.getName() + "\t" + age + "\tat " + f.creationDate);
+                Debug.log("### " + p.getName() + "\t" + age + "\tat " + f.creationDate);
             }
         }
     }
@@ -324,8 +328,8 @@ public class Familiar {
             Person newWifeObj = new Person(Namer.getName(true, Racist.human), humanPlebs, null, null,
                     Timer.getDate(garvonI.born.get(Calendar.YEAR) + 8), Status.LEGAL_CHILD, true, 0.7,
                     0.5 + 0.5 * rand.nextDouble(), 0.7 + 0.3 * rand.nextDouble(), 0.1 + 0.1 * rand.nextDouble(),
-                    0.1 + 0.3 * rand.nextDouble(), 1, 1, 17, 19, 1, 1, 0, StateCreator.jealous(null), StateCreator.impulsive(null),
-                    StateCreator.proud(null), StateCreator.amorous(null));
+                    0.1 + 0.3 * rand.nextDouble(), 1, 1, 17, 19, 1, 1, 0, StateCreator.jealous(Racist.human), StateCreator.impulsive(Racist.human),
+                    StateCreator.proud(Racist.human), StateCreator.amorous(Racist.human));
             newWifeObj.plannedKids = 0;
             Marriager.marriage(garvonI, newWifeObj);
         }
@@ -343,6 +347,21 @@ public class Familiar {
     }
 
     public static boolean familyNeedChildren(Family family) {
+        boolean allMembersInRange = allMembersInRange(family); //not too many members
+        boolean fewChildren = fewChildren(family); //
+        boolean fewFertileBranches = fewFertileBranches(family);
+        return allMembersInRange && fewChildren && fewFertileBranches;
+    }
+
+    private static boolean allMembersInRange(Family family) {
+        return family.aliveMembers.size() < 50;
+    }
+
+    private static boolean fewChildren(Family family) {
+        return family.childrenCount() < 10;
+    }
+
+    private static boolean fewFertileBranches(Family family) {
         return true;
     }
 

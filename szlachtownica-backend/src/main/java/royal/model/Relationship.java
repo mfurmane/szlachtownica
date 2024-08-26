@@ -37,7 +37,7 @@ public class Relationship {
 
 	@JsonIgnore
 	public void end(Calendar date) {
-//		if (type == RelationType.LEGAL) System.out.println("End of relation:\t" + first.getName() + "\t" + (first.died != null ? first.died.get(Calendar.YEAR) : "") + "\t" + second.getName() + "\t" + (second.died != null ? second.died.get(Calendar.YEAR) : "") + "\t" + first.family.creationDate);
+//		if (type == RelationType.LEGAL) Debug.log("End of relation:\t" + first.getName() + "\t" + (first.died != null ? first.died.get(Calendar.YEAR) : "") + "\t" + second.getName() + "\t" + (second.died != null ? second.died.get(Calendar.YEAR) : "") + "\t" + first.family.creationDate);
 		endDate = date;
 	}
 
