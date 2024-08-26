@@ -26,16 +26,17 @@ public class Main {
             }
             Familiar.families.forEach(family -> {
                 if (family.isCreated()) {
-                    handleFamilyForDay(family);
-                } else if (family.plebs) {
-                    handlePlebs(family);
+                    handleDeaths(family);
+                    if (!family.plebs) {
+                        handleFamilyForDay(family);
+                    }
                 }
             });
             Timer.currentCalendar.add(Timer.timeSkip, 1); // może tydzień
         }
     }
 
-    private static void handlePlebs(Family family) {
+    private static void handleDeaths(Family family) {
         for (Person aliveMember : family.aliveMembers) {
             handleDeathPossibilities(aliveMember);
         }
@@ -57,7 +58,6 @@ public class Main {
         if (person.birthAt > 0)
             Birther.handleBirth(person);
         else {
-            handleDeathPossibilities(person);
             if (person.family.aliveMembers.contains(person)) {
                 Birther.handlePregnancy(person);
                 if (!Familiar.plebs.contains(person.parentsFamily)) {
