@@ -350,7 +350,8 @@ public class Familiar {
         boolean allMembersInRange = allMembersInRange(family); //not too many members
         boolean fewChildren = fewChildren(family); //
         boolean fewFertileBranches = fewFertileBranches(family);
-        return allMembersInRange && fewChildren && fewFertileBranches;
+        boolean veryFewChildrenAndFertileBranches = veryFewChildrenAndFertileBranches(family);
+	return veryFewChildrenAndFertileBranches || (allMembersInRange && (fewChildren || fewFertileBranches));
     }
 
     private static boolean allMembersInRange(Family family) {
@@ -362,9 +363,15 @@ public class Familiar {
     }
 
     private static boolean fewFertileBranches(Family family) {
-        return true;
+        return family.fertileBranches() < 3;
     }
 
+
+    private static booleanveryFewChildrenAndFertileBranches(Family family) {
+        return family.childrenCount() < 3 && family.fertileBranches() < 2;
+    }
+
+	
     public static boolean familyAllowsHomo(Family family) {
         return true;
     }
