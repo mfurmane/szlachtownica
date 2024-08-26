@@ -177,6 +177,18 @@ public class Family {
 	public int fertileBranches() {
 		int branches = 0;
 		for (Person p : aliveMembers) {
+			if (!p.isMarried() && p.age > 14 && p.age < raceObj.lifespan * 0.7 && this == p.parentsFamily) {
+				branches++;
+			} else if (p.isMarried()) {
+				Person partner = p.getMarriage().getPartner(p);
+				if (partner != null && partner.sex != p.sex && partner.raceObj == p.raceObj
+						&& p.age < raceObj.lifespan * 0.7) {
+					//if (p.plannedKids > 0 || p.kidsInFamily() > 0) {
+						branches++;
+					//}
+				}
+			}
+			/*
 			if (p.isMarried() && this == p.parentsFamily) {
 				Person partner = p.getMarriage().getPartner(p);
 				if (partner != null && partner.sex != p.sex && partner.raceObj == p.raceObj
@@ -186,6 +198,7 @@ public class Family {
 					}
 				}
 			}
+			*/
 		}
 		return branches;
 	}
@@ -204,7 +217,17 @@ public class Family {
 		return plebs || Timer.currentCalendar.get(Calendar.YEAR) >= creationDate;
     }
 
+public boolean isCoherent() {
+    for (Person p : aliveMembers) {
+	    if (p.family != this) {
+		    return false;
+	    }
+    }
+	return true;
+}
+
 	public boolean shouldMarryPlebs() {
 		return isCreated() && plebsMarriageYearsCounter > 0;
 	}
+	
 }
