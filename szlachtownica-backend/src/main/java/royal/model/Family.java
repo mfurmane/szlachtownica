@@ -201,7 +201,7 @@ public class Family {
 	}
 
     public boolean isCreated() {
-		return !plebs && Timer.currentCalendar.get(Calendar.YEAR) >= creationDate;
+		return plebs || Timer.currentCalendar.get(Calendar.YEAR) >= creationDate;
     }
 
 	public boolean shouldMarryPlebs() {
