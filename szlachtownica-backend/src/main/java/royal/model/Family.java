@@ -177,12 +177,12 @@ public class Family {
 	public int fertileBranches() {
 		int branches = 0;
 		for (Person p : aliveMembers) {
-			if (!p.isMarried() && p.age > 14 && p.age < raceObj.lifespan * 0.7 && this == p.parentsFamily) {
-				branches++;
+			if (!p.isMarried() && p.age > 14 && p.age < raceObj.childTo && this == p.parentsFamily) {
+				;
 			} else if (p.isMarried()) {
 				Person partner = p.getMarriage().getPartner(p);
 				if (partner != null && partner.sex != p.sex && partner.raceObj == p.raceObj
-						&& p.age < raceObj.lifespan * 0.7) {
+						&& p.age < raceObj.childTo) {
 					//if (p.plannedKids > 0 || p.kidsInFamily() > 0) {
 						branches++;
 					//}
